@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: workerstest.weareinto.ai
+  - host: HOSTNAME
     http:
       paths:
       - path: /?(.*)

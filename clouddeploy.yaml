@@ -14,4 +14,4 @@ metadata:
   name: flower
 description: Staging Environment
 gke:
-  cluster: projects/weareinto-staging/locations/us-central1/clusters/into-guesty-api-staging-cluster
+  cluster: projects/PROJECT_ID/locations/us-central1/clusters/into-guesty-api-staging-cluster

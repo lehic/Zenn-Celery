@@ -20,7 +20,7 @@ spec:
       serviceAccountName: gke-sa  # Update to the new Kubernetes Service Account
       containers:
       - name: into-guesty-flower-staging
-        image: "gcr.io/weareinto-staging/into-guesty-flower-staging:SHORT_SHA"
+        image: "gcr.io/PROJECT_ID/into-guesty-flower-staging:SHORT_SHA"
         ports:
         - containerPort: 30005
         resources:
