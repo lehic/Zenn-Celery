@@ -17,8 +17,8 @@
 
 # if __name__ == "__main__":
     
-#     # project_id = "weareinto-staging"
-#     project_id = "weareinto-staging"
+#     # project_id = "PROJECT_ID"
+#     project_id = "PROJECT_ID"
 #     secret_id = "staging_env_vars"
     
 #     # Fetch the secret from Secret Manager
@@ -47,7 +47,7 @@ def save_secrets_to_env_file(secret_data, file_path=".env"):
                 print(key, value)  # For debugging purposes
 
 if __name__ == "__main__":
-    project_id = "weareinto-staging"
+    project_id = "PROJECT_ID"
     secret_id = "api_workers_secrets"
     
     # Fetch the secret from Secret Manager
