@@ -48,7 +48,7 @@ def save_secrets_to_env_file(secret_data, file_path=".env"):
 
 if __name__ == "__main__":
     project_id = "weareinto-staging"
-    secret_id = "staging_env_vars"
+    secret_id = "api_workers_secrets"
     
     # Fetch the secret from Secret Manager
     secret_data = access_secret_version(project_id, secret_id)
