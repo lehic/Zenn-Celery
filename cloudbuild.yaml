@@ -1,0 +1,61 @@
+steps:
+
+# # Step 1: Fetch the secret from Secret Manager
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - |
+#     gcloud secrets versions access latest --secret=staging_env_vars > .env
+
+#     # # Enable automatic export of variables
+#     # set -a
+#     # # Source the environment file to load variables
+#     # source .env
+#     # # Disable automatic export of variables
+#     # set +a
+
+# build container
+- id: 'build flask image'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/weareinto-staging/into-guesty-flower-staging:$SHORT_SHA', '.']
+
+# Push to GCR
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'pushing flask to GCR'
+  args: ['push', 'gcr.io/weareinto-staging/into-guesty-flower-staging:$SHORT_SHA']
+
+# Replace placeholder in deployment.yaml with actual short SHA
+- name: 'ubuntu'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "SHORT_SHA is $SHORT_SHA"
+    sed -i "s/SHORT_SHA/$SHORT_SHA/g" deployment.yaml
+    echo "Updated deployment.yaml:"
+    cat deployment.yaml
+
+# Register Cloud Deploy pipeline
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'registering flask pipeline'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - gcloud deploy apply --file=clouddeploy.yaml --region=us-central1 --project=weareinto-staging
+
+# Create a release
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - >
+    gcloud deploy releases create release-$BUILD_ID
+    --delivery-pipeline=into-guesty-flower-pipeline
+    --region=us-central1
+    --images=flask_staging_image=gcr.io/weareinto-staging/into-guesty-flower-staging:$SHORT_SHA
+
+substitutions:
+  _GCR_REGION: "us-central1"
+images:
+  - "gcr.io/weareinto-staging/into-guesty-flower-staging:$SHORT_SHA" 
