@@ -37,7 +37,7 @@ def access_secret_version(project_id, secret_id, version_id="latest"):
     response = client.access_secret_version(request={"name": name})
     return response.payload.data.decode("UTF-8")
 
-def save_secrets_to_env_file(secret_data, file_path=".env"):
+def save_secrets_to_env_file(secret_data, file_path="/app/.env"):
     with open(file_path, 'w') as env_file:
         lines = secret_data.split('\n')
         for line in lines:
