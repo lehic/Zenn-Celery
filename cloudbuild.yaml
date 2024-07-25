@@ -21,10 +21,10 @@ steps:
   - |
     if [[ "$PROJECT_ID" == "weareinto" ]]; then
       echo "Setting environment to production"
-      sed -i "s/HOSTNAME/flower.weareinto.ai/g" ingress.yaml
+      sed -i "s/HOSTNAME/str-flower.weareinto.ai/g" ingress.yaml
     else
       echo "Setting environment to staging"
-      sed -i "s/HOSTNAME/staging-flower.weareinto.ai/g" ingress.yaml
+      sed -i "s/HOSTNAME/str-flower-staging.weareinto.ai/g" ingress.yaml
     fi
     echo "Updated ingress.yaml:"
     cat ingress.yaml
