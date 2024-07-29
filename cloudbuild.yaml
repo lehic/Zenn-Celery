@@ -40,6 +40,23 @@ steps:
     echo "Updated deployment.yaml:"
     cat deployment.yaml
 
+# Replace CLUSTER_NAME in clouddeploy.yaml based on the environment
+- id: 'set cluster name'
+  name: 'ubuntu'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    if [[ "$PROJECT_ID" == "weareinto" ]]; then
+      echo "Setting cluster to into-cluster"
+      sed -i "s/CLUSTER_NAME/into-cluster/g" clouddeploy.yaml
+    else
+      echo "Setting cluster to into-guesty-api-staging-cluster"
+      sed -i "s/CLUSTER_NAME/into-guesty-api-staging-cluster/g" clouddeploy.yaml
+    fi
+    echo "Updated clouddeploy.yaml:"
+    cat clouddeploy.yaml
+
 # build container
 - id: 'build flask image'
   name: 'gcr.io/cloud-builders/docker'
