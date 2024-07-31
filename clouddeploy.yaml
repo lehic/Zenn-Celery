@@ -12,6 +12,6 @@ apiVersion: deploy.cloud.google.com/v1beta1
 kind: Target
 metadata:
   name: flower
-description: Staging Environment
+description: Environment
 gke:
   cluster: projects/PROJECT_ID/locations/us-central1/clusters/CLUSTER_NAME

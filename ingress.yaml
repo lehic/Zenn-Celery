@@ -16,6 +16,6 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: into-guesty-flower-staging-service
+            name: into-guesty-flower-service
             port:
               number: 80
