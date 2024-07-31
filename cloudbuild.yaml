@@ -60,12 +60,12 @@ steps:
 # build container
 - id: 'build flask image'
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/into-guesty-flower-staging:$SHORT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/into-guesty-flower:$SHORT_SHA', '.']
 
 # Push to GCR
 - name: 'gcr.io/cloud-builders/docker'
   id: 'pushing flask to GCR'
-  args: ['push', 'gcr.io/$PROJECT_ID/into-guesty-flower-staging:$SHORT_SHA']
+  args: ['push', 'gcr.io/$PROJECT_ID/into-guesty-flower:$SHORT_SHA']
 
 # Register Cloud Deploy pipeline
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -84,9 +84,9 @@ steps:
     gcloud deploy releases create release-$BUILD_ID
     --delivery-pipeline=into-guesty-flower-pipeline
     --region=us-central1
-    --images=flask_staging_image=gcr.io/$PROJECT_ID/into-guesty-flower-staging:$SHORT_SHA
+    --images=flask_image=gcr.io/$PROJECT_ID/into-guesty-flower:$SHORT_SHA
 
 substitutions:
   _GCR_REGION: "us-central1"
 images:
-  - "gcr.io/$PROJECT_ID/into-guesty-flower-staging:$SHORT_SHA" 
+  - "gcr.io/$PROJECT_ID/into-guesty-flower:$SHORT_SHA" 
