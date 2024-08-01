@@ -46,6 +46,7 @@ def save_secrets_to_env_file(secret_data, file_path="/app/.env"):
                 env_file.write(f"{key}={value}\n")
                 print(key, value)  # For debugging purposes
 
+
 if __name__ == "__main__":
     project_id = "PROJECT_ID"
     secret_id = "api_workers_secrets"
