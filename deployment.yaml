@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: into-guesty-flower
+  namespace: gke-namespace
+spec:
+  selector:
+    matchLabels:
+      app: into-guesty-flower
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: into-guesty-flower
+    spec:
+      serviceAccountName: gke-sa  # Update to the new Kubernetes Service Account
+      containers:
+      - name: into-guesty-flower
+        image: "gcr.io/PROJECT_ID/into-guesty-flower:SHORT_SHA"
+        ports:
+        - containerPort: 30005
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "500m"
+            memory: "2Gi"
+      restartPolicy: Always
